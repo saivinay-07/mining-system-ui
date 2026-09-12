@@ -1,0 +1,257 @@
+<div class="dashboard-page">
+
+  <header class="page-header">
+    <div class="page-heading">
+      <h1>Sand Mining</h1>
+
+      <div class="breadcrumb">
+        <span>›</span>
+        <span>Dashboard</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-button primary-button" title="Add Vehicle">
+        +
+      </button>
+
+      <button class="icon-button" title="Search">
+        ⌕
+      </button>
+
+      <button class="icon-button notification-button" title="Notifications">
+        ♧
+        <span class="notification-count">3</span>
+      </button>
+
+      <button class="icon-button" title="Settings">
+        ⚙
+      </button>
+
+      <div class="profile-avatar">
+        SM
+      </div>
+    </div>
+  </header>
+
+  <section class="summary-grid">
+
+    <div class="summary-card">
+      <div class="summary-top">
+        <div class="summary-icon blue-icon">
+          🚚
+        </div>
+
+        <span class="summary-label">Total Vehicles</span>
+      </div>
+
+      <div class="summary-bottom">
+        <h2>{{ summary.totalVehicles }}</h2>
+        <span class="summary-badge">Today</span>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-top">
+        <div class="summary-icon green-icon">
+          ✓
+        </div>
+
+        <span class="summary-label">Inside Gate</span>
+      </div>
+
+      <div class="summary-bottom">
+        <h2>{{ summary.insideVehicles }}</h2>
+        <span class="summary-badge success-badge">Active</span>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-top">
+        <div class="summary-icon blue-icon">
+          ▣
+        </div>
+
+        <span class="summary-label">Completed Trips</span>
+      </div>
+
+      <div class="summary-bottom">
+        <h2>{{ summary.completedTrips }}</h2>
+        <span class="summary-badge info-badge">Completed</span>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-top">
+        <div class="summary-icon red-icon">
+          !
+        </div>
+
+        <span class="summary-label">Gate Alerts</span>
+      </div>
+
+      <div class="summary-bottom">
+        <h2>{{ summary.alerts }}</h2>
+        <span class="summary-badge danger-badge">Urgent</span>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="content-section">
+
+    <div class="section-header">
+      <div>
+        <h2>Vehicle Monitoring</h2>
+        <p>Track vehicles entering and exiting the mining gate.</p>
+      </div>
+
+      <div class="section-actions">
+        <button class="icon-button primary-button" title="Add Record">
+          +
+        </button>
+
+        <button class="icon-button" title="Search Vehicles">
+          ⌕
+        </button>
+
+        <button class="export-button">
+          Export
+        </button>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <button
+        class="filter-button"
+        [class.active-filter]="selectedFilter === 'All Vehicles'"
+        (click)="changeFilter('All Vehicles')">
+        All Vehicles
+      </button>
+
+      <button
+        class="filter-button"
+        [class.active-filter]="selectedFilter === 'Inside Gate'"
+        (click)="changeFilter('Inside Gate')">
+        Inside Gate
+      </button>
+
+      <button
+        class="filter-button"
+        [class.active-filter]="selectedFilter === 'Completed'"
+        (click)="changeFilter('Completed')">
+        Completed
+      </button>
+
+      <button
+        class="filter-button"
+        [class.active-filter]="selectedFilter === 'Alert'"
+        (click)="changeFilter('Alert')">
+        Alerts
+      </button>
+    </div>
+
+    <div class="table-wrapper">
+
+      <table class="data-table">
+
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox">
+            </th>
+
+            <th>S.No</th>
+            <th>Vehicle Number</th>
+            <th>Driver Name</th>
+            <th>Material</th>
+            <th>Entry Time</th>
+            <th>Exit Time</th>
+            <th>Quantity</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (vehicle of filteredVehicles; track vehicle.id) {
+            <tr>
+              <td>
+                <input type="checkbox">
+              </td>
+
+              <td>
+                <span class="serial-number">
+                  {{ vehicle.id }}
+                </span>
+              </td>
+
+              <td>
+                <div class="vehicle-cell">
+                  <div class="vehicle-icon">
+                    🚚
+                  </div>
+
+                  <strong>{{ vehicle.vehicleNumber }}</strong>
+                </div>
+              </td>
+
+              <td>
+                {{ vehicle.driverName }}
+              </td>
+
+              <td>
+                <span class="material-text">
+                  {{ vehicle.material }}
+                </span>
+              </td>
+
+              <td>
+                {{ vehicle.entryTime }}
+              </td>
+
+              <td>
+                {{ vehicle.exitTime }}
+              </td>
+
+              <td>
+                <strong>{{ vehicle.quantity }} Ton</strong>
+              </td>
+
+              <td>
+                <span
+                  class="status-badge"
+                  [class]="getStatusClass(vehicle.status)">
+                  {{ vehicle.status }}
+                </span>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="9" class="empty-row">
+                No vehicle records found.
+              </td>
+            </tr>
+          }
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="table-footer">
+      <span>
+        Showing {{ filteredVehicles.length }} vehicle records
+      </span>
+
+      <div class="pagination">
+        <button class="pagination-button">‹</button>
+        <button class="pagination-button active-page">1</button>
+        <button class="pagination-button">2</button>
+        <button class="pagination-button">3</button>
+        <button class="pagination-button">›</button>
+      </div>
+    </div>
+
+  </section>
+
+</div>
