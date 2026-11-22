@@ -1,0 +1,10 @@
+# Local image collection; never commit the source photos.
+/Truck/
+
+# Local application data and Python environment artifacts.
+/dataset_manager.sqlite3
+/dataset_manager.sqlite3-*
+__pycache__/
+*.py[cod]
+.venv/
+venv/
