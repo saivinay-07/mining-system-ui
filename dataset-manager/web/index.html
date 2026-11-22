@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10182c"><title>Smart Vehicle Dataset Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24"><path d="M3 13.5 5.2 8h13.6l2.2 5.5V19h-2v-2H5v2H3zm3.5-3.7-1.1 2.8h13.2l-1.1-2.8zM7 15.8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4m10 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4M8 5h8v2H8z"/></svg></div><div><strong>Gate<span>Vision</span></strong><small>DATASET MANAGER</small></div></div>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav class="nav-list" aria-label="Main navigation">
+      <button class="nav-item active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+      <button class="nav-item" data-page="add"><span class="nav-icon">⊕</span>Add Image<span class="nav-tag">NEW</span></button>
+      <button class="nav-item" data-page="images"><span class="nav-icon">▧</span>Dataset Images</button>
+      <button class="nav-item" data-page="structure"><span class="nav-icon">⌘</span>Dataset Structure</button>
+      <button class="nav-item" data-page="statistics"><span class="nav-icon">▥</span>Statistics</button>
+      <button class="nav-item" data-page="duplicates"><span class="nav-icon">⧉</span>Duplicate Check</button>
+      <div class="nav-caption nav-caption-lower">PREFERENCES</div>
+      <button class="nav-item" data-page="settings"><span class="nav-icon">⚙</span>Settings</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="storage-mini"><div class="storage-icon">▤</div><div class="storage-copy"><b>Local storage</b><span>Dataset directory</span></div><i></i></div><div class="version-row"><span>Smart Vehicle Entry & Exit</span><span>v1.0</span></div></div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar"><button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button><div class="breadcrumb"><span>Workspace</span><b>/</b><strong id="crumbPage">Dashboard</strong></div><div class="top-actions"><span class="local-badge"><i></i> Local workspace</span><div class="avatar">SV</div><div class="operator"><b>Dataset operator</b><small>Local session</small></div></div></header>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+<div class="toast-stack" id="toasts" aria-live="polite"></div>
+<div class="modal-backdrop hidden" id="modal"><div class="modal-card" role="dialog" aria-modal="true"><button class="modal-close" id="modalClose">×</button><div id="modalBody"></div></div></div>
+<script src="/app.js" defer></script>
+</body></html>
