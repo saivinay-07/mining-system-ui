@@ -18,8 +18,8 @@ from flask import Flask, jsonify, request, send_from_directory
 from PIL import Image, ImageFile, UnidentifiedImageError
 
 BASE = Path(__file__).resolve().parent
-DATASET = BASE / "dataset"
-DB = BASE / "dataset_manager.sqlite3"
+DATASET = Path(os.getenv("DATASET_ROOT", str(BASE / "dataset"))).resolve()
+DB = Path(os.getenv("DATASET_DB_PATH", str(BASE / "dataset_manager.sqlite3"))).resolve()
 WEB = BASE / "web"
 MAX_BYTES = int(os.getenv("DATASET_MAX_IMAGE_BYTES", 15 * 1024 * 1024))
 TIMEOUT = (5, 15)
@@ -42,6 +42,7 @@ def connect():
 
 
 def init():
+    DB.parent.mkdir(parents=True, exist_ok=True)
     for path in allowed_folders().values():
         path.mkdir(parents=True, exist_ok=True)
     with connect() as db:

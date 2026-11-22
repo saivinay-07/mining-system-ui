@@ -34,6 +34,25 @@ python app.py
 
 Open [http://127.0.0.1:5000](http://127.0.0.1:5000). The server binds to localhost by default. Set `HOST` and `PORT` to override the bind address and port. Set `DATASET_MAX_IMAGE_BYTES` to change the per-image download limit (default 15 MiB).
 
+## Deploy to Render
+
+The repository root must contain `requirements.txt`, `app.py`, `wsgi.py` and the `web/` directory. In the Render service settings, set the root directory to the repository root, then use:
+
+- Build command: `pip install -r requirements.txt`
+- Start command: `gunicorn --workers 1 --threads 4 --bind 0.0.0.0:$PORT wsgi:app`
+- Health check path: `/api/health`
+
+The `.python-version` file selects Python 3.13. Render deploys the branch and commit configured in the service, so these files must be pushed to that branch (the failing deployment log was built from an older commit that did not contain `requirements.txt`).
+
+For persistent collection storage, attach a Render persistent disk mounted at `/var/data` and set these environment variables:
+
+```text
+DATASET_ROOT=/var/data/dataset
+DATASET_DB_PATH=/var/data/dataset_manager.sqlite3
+```
+
+Both the database and collected images must be under the mounted path or they can be lost when the service is replaced. Render persistent disks are configured in the service dashboard and incur plan/storage costs; choose and confirm the suitable plan there. Keep one service instance when using a disk because the disk is attached to a single instance.
+
 ## Data locations
 
 - Dataset images: `dataset/`
